@@ -6,6 +6,14 @@ import CartContainer from "./components/CartContainer";
 import cartItems from "./cart-items";
 // redux stuff
 
+import { createStore } from "redux";
+
+//reducer:
+function reducer() {
+  console.log("hhi redux");
+}
+const store = createStore(reducer);
+
 function App() {
   // cart setup
 
@@ -18,3 +26,8 @@ function App() {
 }
 
 export default App;
+
+/* 
+store = use for storing data like a state.
+reducer = must be the parameter of the createStore(), its a normal js function
+ */
