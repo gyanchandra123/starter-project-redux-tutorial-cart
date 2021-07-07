@@ -15,7 +15,11 @@ function reducer(state, action) {
   }
 
   if (action.type === REMOVE) {
-    console.log("u reset");
+    console.log("remove action", action.payload.id);
+    return {
+      ...state,
+      cart: state.cart.filter((cartItem) => cartItem.id !== action.payload.id),
+    };
   }
   return state; // never forget to return the modified state , otherwise we will get eror.
 

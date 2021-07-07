@@ -34,14 +34,31 @@ const CartItem = ({ img, title, price, amount, remove }) => {
   );
 };
 
-const mapToDispatchProps = (dispatch) => {
-  return { remove: () => dispatch({ type: REMOVE }) };
+const mapToDispatchProps = (dispatch, ownProps) => {
+  const { id } = ownProps;
+  return { remove: () => dispatch({ type: REMOVE, payload: { id: id } }) };
   //this action will be passed as props to the <carditem> component
 };
 
 export default connect(null, mapToDispatchProps)(CartItem);
 /* 
+for video:389
   1. why null at 1st para: since all the props required are passed as props from the 
   parent component cartcontainer. there is no need to pass another mapStateToProps to 
   get those state values, so we to avoid passing, we need to put null
+*/
+
+/* for 390: video:
+ 1. <article> ---------------------------> from the parent component:cardcontainer
+        {cart.map((item) => {
+          return <CartItem key={item.id} {...item} />;
+        })}
+      </article>
+
+2. so the (...item) passed as prop at line 52 to the child component:cardTitle is always
+avaialble inside the mapToDispatchProps() function as second  parameter.
+
+3. from this item props , we can get the id for each of the item and use in the remove operation
+4. but to pass this id value inside the action/reducer, we need to use the "payload"  object
+
 */
