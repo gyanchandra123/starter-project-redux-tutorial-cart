@@ -15,7 +15,7 @@ import { Provider } from "react-redux";
 const initialStore = {
   card: cartItems,
   total: 0,
-  amount: 0,
+  amount: 50,
 };
 
 const store = createStore(reducer, initialStore);
