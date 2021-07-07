@@ -1,8 +1,9 @@
 import React from "react";
 import CartItem from "./CartItem";
 import { connect } from "react-redux";
+import { CLEAR_CART } from "./actions";
 
-const CartContainer = ({ cart = [],total }) => {
+const CartContainer = ({ cart = [], total, dispatch }) => {
   if (cart.length === 0) {
     return (
       <section className="cart">
@@ -34,7 +35,15 @@ const CartContainer = ({ cart = [],total }) => {
             total <span>$ {total}</span>
           </h4>
         </div>
-        <button className="btn clear-btn">clear cart</button>
+        <button
+          className="btn clear-btn"
+          onClick={() => {
+            dispatch({type:CLEAR_CART}); 
+            // after passing the action here, we need to catch in the reducer() function
+          }}
+        >
+          clear cart
+        </button>
       </footer>
     </section>
   );
@@ -46,7 +55,15 @@ function mapStateToProps(store) {
     card: cartItems,----------> this
     total: 105,    ,----------> this
     amount: 50,
-  }; */
+  }; 
+  
+  note : 
+  1. this function implicitly return the dispatch() function from the store along with the
+          state in the store
+          -this is the reason we can use dispatch directly as props in the above line6
+
+   2. the return value of this function is passed as a props to this <Navbar> component
+  */
 
   //return {card:store.card,total:store.total} OR
   const { cart, total } = store;

@@ -20,6 +20,8 @@ const initialStore = {
 
 const store = createStore(reducer, initialStore);
 
+console.log(store)
+
 function App() {
   // cart setup
 
