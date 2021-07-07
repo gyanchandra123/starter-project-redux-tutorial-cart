@@ -1,6 +1,8 @@
 import React from "react";
+import { connect } from "react-redux";
+import { INCREASE, DECREASE, REMOVE } from "./actions";
 
-const CartItem = ({ img, title, price, amount }) => {
+const CartItem = ({ img, title, price, amount, remove }) => {
   return (
     <div className="cart-item">
       <img src={img} alt={title} />
@@ -8,7 +10,9 @@ const CartItem = ({ img, title, price, amount }) => {
         <h4>{title}</h4>
         <h4 className="item-price">${price}</h4>
         {/* remove button */}
-        <button className="remove-btn">remove</button>
+        <button className="remove-btn" onClick={() => remove()}>
+          remove
+        </button>
       </div>
       <div>
         {/* increase amount */}
@@ -30,4 +34,14 @@ const CartItem = ({ img, title, price, amount }) => {
   );
 };
 
-export default CartItem;
+const mapToDispatchProps = (dispatch) => {
+  return { remove: () => dispatch({ type: REMOVE }) };
+  //this action will be passed as props to the <carditem> component
+};
+
+export default connect(null, mapToDispatchProps)(CartItem);
+/* 
+  1. why null at 1st para: since all the props required are passed as props from the 
+  parent component cartcontainer. there is no need to pass another mapStateToProps to 
+  get those state values, so we to avoid passing, we need to put null
+*/
