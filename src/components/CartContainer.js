@@ -1,9 +1,20 @@
 import React from "react";
 import CartItem from "./CartItem";
 import { connect } from "react-redux";
-import { CLEAR_CART } from "./actions";
+import { CLEAR_CART, GET_TOTALS } from "./actions";
 
 const CartContainer = ({ cart = [], total, dispatch }) => {
+
+  /*
+  1. this is required to calculate the total amount
+  2. this need to execute everytime beacuse, when we increase/decrease any cart,
+  the cartcontainer gets re-render , and so that the total calculation could be
+  executed for every change in the cart
+   */
+  React.useEffect(() => {
+    dispatch({ type: GET_TOTALS });
+  });
+
   if (cart.length === 0) {
     return (
       <section className="cart">
@@ -38,7 +49,7 @@ const CartContainer = ({ cart = [], total, dispatch }) => {
         <button
           className="btn clear-btn"
           onClick={() => {
-            dispatch({type:CLEAR_CART}); 
+            dispatch({ type: CLEAR_CART });
             // after passing the action here, we need to catch in the reducer() function
           }}
         >

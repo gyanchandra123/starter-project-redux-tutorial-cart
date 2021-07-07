@@ -1,4 +1,11 @@
-import { DECREASE, INCREASE, CLEAR_CART, REMOVE } from "./components/actions";
+import cartItems from "./cart-items";
+import {
+  DECREASE,
+  INCREASE,
+  CLEAR_CART,
+  REMOVE,
+  GET_TOTALS,
+} from "./components/actions";
 
 //reducer:
 function reducer(state, action) {
@@ -30,12 +37,13 @@ function reducer(state, action) {
 
     let tempCart = [];
 
-    if(action.payload.amount===1){
-      console.log('reaches cart limit 1')
-      tempCart = state.cart.filter((cartItem) => cartItem.id !== action.payload.id)
-
-    }else{
-        tempCart = state.cart.map((cartItem) => {
+    if (action.payload.amount === 1) {
+      console.log("reaches cart limit 1");
+      tempCart = state.cart.filter(
+        (cartItem) => cartItem.id !== action.payload.id
+      );
+    } else {
+      tempCart = state.cart.map((cartItem) => {
         if (cartItem.id === action.payload.id) {
           cartItem = { ...cartItem, amount: cartItem.amount - 1 };
         }
@@ -43,7 +51,7 @@ function reducer(state, action) {
       });
     }
 
-    return {...state,cart:tempCart}
+    return { ...state, cart: tempCart };
   }
 
   if (action.type === REMOVE) {
@@ -52,6 +60,26 @@ function reducer(state, action) {
       ...state,
       cart: state.cart.filter((cartItem) => cartItem.id !== action.payload.id),
     };
+  }
+
+  if (action.type === GET_TOTALS) {
+    console.log("total");
+
+    let { total, amount } = state.cart.reduce((cartTotal,cartItem) => {      
+      
+      const {price,amount} =cartItem;
+      const itemTotal = price*amount
+      cartTotal.total+=itemTotal;
+      cartTotal.amount+=amount;
+      return cartTotal
+    }, {
+      total: 0,
+      amount: 0,
+    });
+
+    total= parseFloat(total.toFixed(2))
+
+    return {...state,total,amount}
   }
   return state; // never forget to return the modified state , otherwise we will get eror.
 
