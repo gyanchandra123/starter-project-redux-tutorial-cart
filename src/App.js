@@ -11,23 +11,29 @@ import { createStore } from "redux";
 //default value:
 const initialStore = {
   count: 0,
+  name: "smith"
 };
 
 //reducer:
 function reducer(state, action) {  
   if (action.type === "DECREASE") {
     //state.count= state.count-1 [* we can't mutate directly like this]
-    return { count: state.count - 1 };
+    return {...state, count: state.count - 1,name:"anna" };
   }
 
   if (action.type === "INCREASE") {
     //state.count= state.count-1 [* we can't mutate directly like this]
-    return { count: state.count + 1 };
+    return { ...state,count: state.count + 1 };
   }
 
   if (action.type === "RESET") {
     //state.count= state.count-1 [* we can't mutate directly like this]
-    return { count: 0 };
+    return {...state, count: 0 };
+  }
+
+  if (action.type === "CHANGE_NAME") {
+    //state.count= state.count-1 [* we can't mutate directly like this]
+    return {...state, name:'bobo' };
   }
   return state;
 }
@@ -38,6 +44,7 @@ store.dispatch({ type: "INCREASE" });
 store.dispatch({ type: "INCREASE" }); 
 store.dispatch({ type: "RESET" }); 
 store.dispatch({ type: "INCREASE" });
+store.dispatch({ type: "CHANGE_NAME" });
 
 console.log('latest state :',store.getState());
 
