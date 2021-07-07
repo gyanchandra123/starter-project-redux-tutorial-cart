@@ -7,6 +7,8 @@ import cartItems from "./cart-items";
 // redux stuff
 
 import { createStore } from "redux";
+import {DECREASE,INCREASE} from './components/actions';
+import reducer from './reducer'
 
 //default value:
 const initialStore = {
@@ -14,37 +16,13 @@ const initialStore = {
   name: "smith"
 };
 
-//reducer:
-function reducer(state, action) {  
-  if (action.type === "DECREASE") {
-    //state.count= state.count-1 [* we can't mutate directly like this]
-    return {...state, count: state.count - 1,name:"anna" };
-  }
 
-  if (action.type === "INCREASE") {
-    //state.count= state.count-1 [* we can't mutate directly like this]
-    return { ...state,count: state.count + 1 };
-  }
-
-  if (action.type === "RESET") {
-    //state.count= state.count-1 [* we can't mutate directly like this]
-    return {...state, count: 0 };
-  }
-
-  if (action.type === "CHANGE_NAME") {
-    //state.count= state.count-1 [* we can't mutate directly like this]
-    return {...state, name:'bobo' };
-  }
-  return state;
-}
   
 const store = createStore(reducer, initialStore);
-store.dispatch({ type: "DECREASE" }); //action passed
-store.dispatch({ type: "INCREASE" }); 
-store.dispatch({ type: "INCREASE" }); 
-store.dispatch({ type: "RESET" }); 
-store.dispatch({ type: "INCREASE" });
-store.dispatch({ type: "CHANGE_NAME" });
+store.dispatch({ type: DECREASE }); //action passed
+store.dispatch({ type: INCREASE }); 
+store.dispatch({ type: INCREASE }); 
+ 
 
 console.log('latest state :',store.getState());
 
