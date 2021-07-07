@@ -8,6 +8,21 @@ function reducer(state, action) {
 
   if (action.type === INCREASE) {
     console.log("u increased");
+    /* 
+      1. we need to perform the increase functionality based on the id of the card-item.
+      2. if the id in the payload matches with the id of the old card-item in the state,
+      3. then only , increase the amount property value for that item
+      4. use spread operator.
+     */
+
+    let tempCart = state.cart.map((cartItem) => {
+      if (cartItem.id === action.payload.id) {
+        cartItem = { ...cartItem, amount: cartItem.amount + 1 };
+      }
+      return cartItem;
+    });
+
+    return { ...state, cart: tempCart };
   }
 
   if (action.type === DECREASE) {
