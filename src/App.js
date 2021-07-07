@@ -10,24 +10,36 @@ import { createStore } from "redux";
 
 //default value:
 const initialStore = {
-  count: 10,
+  count: 0,
 };
 
 //reducer:
-function reducer(state, action) {
-  console.log("hhi redux");
-  console.log("state :", state, "action :", action);
+function reducer(state, action) {  
   if (action.type === "DECREASE") {
     //state.count= state.count-1 [* we can't mutate directly like this]
     return { count: state.count - 1 };
+  }
+
+  if (action.type === "INCREASE") {
+    //state.count= state.count-1 [* we can't mutate directly like this]
+    return { count: state.count + 1 };
+  }
+
+  if (action.type === "RESET") {
+    //state.count= state.count-1 [* we can't mutate directly like this]
+    return { count: 0 };
   }
   return state;
 }
   
 const store = createStore(reducer, initialStore);
 store.dispatch({ type: "DECREASE" }); //action passed
+store.dispatch({ type: "INCREASE" }); 
+store.dispatch({ type: "INCREASE" }); 
+store.dispatch({ type: "RESET" }); 
+store.dispatch({ type: "INCREASE" });
 
-console.log(store.getState());
+console.log('latest state :',store.getState());
 
 function App() {
   // cart setup
